@@ -1,5 +1,6 @@
 require 'sinatra'
-require 'datamapper'
+require 'data_mapper'
+require 'tilt/erubis'
 
 DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/recall.db")
 
@@ -13,3 +14,10 @@ class Note
 end
 
 DataMapper.finalize.auto_upgrade!
+
+# routing
+get '/' do
+  @notes = Note.all :order => :id.desc
+  @title = 'All Notes'
+  erb :home
+end
