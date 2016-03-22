@@ -15,6 +15,12 @@ end
 
 DataMapper.finalize.auto_upgrade!
 
+# escaping HTML
+helpers do
+  include Rack::Utils
+  alias_method :h, :escape_html
+end
+
 # routing
 get '/' do
   @notes = Note.all :order => :id.desc
