@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'data_mapper'
 require 'tilt/erubis'
+require 'tilt/builder'
 
 DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/recall.db")
 
@@ -19,6 +20,12 @@ DataMapper.finalize.auto_upgrade!
 helpers do
   include Rack::Utils
   alias_method :h, :escape_html
+end
+
+# rss feeds
+get '/rss.xml' do
+  @notes = Note.all :order => :id.desc
+  builder :rss
 end
 
 # routing
