@@ -2,6 +2,8 @@ require 'sinatra'
 require 'data_mapper'
 require 'tilt/erubis'
 require 'tilt/builder'
+require 'sinatra/flash'
+require 'sinatra/redirect_with_flash'
 
 SITE_TITLE = "Recall"
 SITE_DESCRIPTION = "'cause you're too busy to remember"
@@ -35,6 +37,9 @@ end
 get '/' do
   @notes = Note.all :order => :id.desc
   @title = 'All Notes'
+  if @notes.empty?
+    flash.sweep[:error] = 'No notes found. Add first note below.'
+  end
   erb :home
 end
 
