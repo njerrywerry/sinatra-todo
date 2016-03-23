@@ -6,6 +6,7 @@ require 'sinatra/flash'
 require 'sinatra/redirect_with_flash'
 
 enable :sessions
+set :session_secret, '##@%&*'
 
 SITE_TITLE = "Recall"
 SITE_DESCRIPTION = "'cause you're too busy to remember"
